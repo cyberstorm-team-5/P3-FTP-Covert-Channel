@@ -15,7 +15,7 @@
 import ftplib
 ###############################################################
 
-METHOD = 1
+METHOD = 0
 #all of our data is stored in this list
 data = []
 
@@ -24,18 +24,64 @@ server = ftplib.FTP()
 server.connect('www.jeangourd.com')
 server.login('anonymous')
 
+#process input as a sequence of 7- or 8-bit ascii code to convert to a readable string
+def convertASCII(binaryInput, binaryLength):
+	
+	finalString = ""
+	
+	#loop through indexes such that i = the 0th bit in every sequence of numBits
+	#(7 or 8) bits in the binaryInput
+	for i in range(0, binaryLength-(6), 7):
+
+		#get the ASCII number for the bits
+		num = int(binaryInput[i:i+7], 2)
+
+		#check if the num will produce a backspace (ASCII 8)
+		if(num == 8):
+			#remove the trailing character from the string
+			finalString = finalString[:-1]
+		   
+		else:
+			#convert the 7 or 8 bits into an integer form base 2, then use chr
+			#to convert the integer into the equivalent ASCII character
+			finalString += chr(num)
+		
+	print(finalString)
+	return
+
+
 
 if METHOD == 0:
-	inputString = server.dir('7', data.append)
+	server.dir('7', data.append)
 	i = 0
 	while i < len(data):
-		data[i] = data[i][0:12]
+		data[i] = data[i][0:10]
 		i=i+1
 
+	string = ''
+	
+		
+###########################################################################################################################
 
 
+	for line in data:
+		if line [:3] == ('---'):
+			for letter in line[3:]:
+				if letter ==  ('-'):
+					string += "0"
+
+				else:
+					string += "1"
+
+	convertASCII(string, len(string))
+				
+
+	
 
 
+###########################################################################################################################              
+
+ 
 
 
 
@@ -68,8 +114,8 @@ else:
 
 
 
+############################################################################################################################
 
 
-
-for line in data:
-	print(line)
+#for line in data:
+	#print(line)
