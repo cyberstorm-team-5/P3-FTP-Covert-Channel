@@ -1,4 +1,3 @@
-#!/usr/bin/env python2.7
 ################################################################
 # Authors: Team Chinese (Lane Arnold, Christopher Boquet,
 # 	   Christopher Bouton, Darrell Durousseaux, Clay Fonseca,
@@ -14,12 +13,13 @@
 #              permissions to generate and output the covert message.
 ################################################################
 import ftplib
-import sys
 ###############################################################
 
 METHOD = 1
+#all of our data is stored in this list
 data = []
 
+###############################################################
 server = ftplib.FTP()
 server.connect('www.jeangourd.com')
 server.login('anonymous')
@@ -27,7 +27,10 @@ server.login('anonymous')
 
 if METHOD == 0:
 	inputString = server.dir('7', data.append)
-
+	i = 0
+	while i < len(data):
+		data[i] = data[i][0:12]
+		i=i+1
 
 
 
@@ -50,9 +53,11 @@ if METHOD == 0:
 
 
 else:
-	inputString = server.dir('10', data.append)
-
-
+	server.dir('10', data.append)
+	i = 0
+	while i < len(data):
+		data[i] = data[i][0:12]
+		i=i+1
 
 
 
@@ -67,4 +72,4 @@ else:
 
 
 for line in data:
-	print "-", line
+	print(line)
