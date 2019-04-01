@@ -17,18 +17,17 @@ import ftplib
 import sys
 ###############################################################
 
-
 METHOD = 1
+data = []
 
-
-########################MAIN###################################
 server = ftplib.FTP()
 server.connect('www.jeangourd.com')
 server.login('anonymous')
 
 
 if METHOD == 0:
-	inputString = server.dir('7')
+	inputString = server.dir('7', data.append)
+
 
 
 
@@ -51,7 +50,7 @@ if METHOD == 0:
 
 
 else:
-	inputString = server.dir('10')
+	inputString = server.dir('10', data.append)
 
 
 
@@ -67,10 +66,5 @@ else:
 
 
 
-
-
-
-
-print (inputString)
-
-
+for line in data:
+	print "-", line
