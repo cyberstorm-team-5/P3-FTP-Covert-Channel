@@ -15,7 +15,7 @@
 import ftplib
 ###############################################################
 
-METHOD = 0
+METHOD = 1
 #all of our data is stored in this list
 data = []
 
@@ -95,7 +95,7 @@ if METHOD == 0:
 
 
 
-
+# implementation fro 10 | CDB
 
 
 else:
@@ -105,13 +105,17 @@ else:
 		data[i] = data[i][0:10]
 		i=i+1
 
-    while i < len(data):
-        if(data[i] != '-'):
-            data[i] = 0
-        else:
-            data[i] = 1
+	string = ''
 
+	for line in data:
+		for letter in line:
+			if letter ==  ('-'):
+				string += "0"
 
+			else:
+				string += "1"
+
+	convertASCII(string, len(string))
 
 
 ############################################################################################################################
