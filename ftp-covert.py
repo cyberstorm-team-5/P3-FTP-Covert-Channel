@@ -13,15 +13,64 @@
 #              code), will either use the last 7 or all 10 bits of the file
 #              permissions to generate and output the covert message.
 ################################################################
-
+import ftplib
 import sys
 ###############################################################
 
 
-
+METHOD = 1
 
 
 ########################MAIN###################################
+server = ftplib.FTP()
+server.connect('www.jeangourd.com')
+server.login('anonymous')
 
+
+if METHOD == 0:
+	inputString = server.dir('7')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+else:
+	inputString = server.dir('10')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+print (inputString)
 
 
