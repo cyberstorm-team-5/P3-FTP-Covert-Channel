@@ -29,7 +29,7 @@ if METHOD == 0:
 	inputString = server.dir('7', data.append)
 	i = 0
 	while i < len(data):
-		data[i] = data[i][0:12]
+		data[i] = data[i][0:10]
 		i=i+1
 
 
@@ -56,14 +56,14 @@ else:
 	server.dir('10', data.append)
 	i = 0
 	while i < len(data):
-		data[i] = data[i][0:12]
+		data[i] = data[i][0:10]
 		i=i+1
 
-
-
-
-
-
+    while i < len(data):
+        if(data[i] != '-'):
+            data[i] = 0
+        else:
+            data[i] = 1
 
 
 
