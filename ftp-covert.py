@@ -85,16 +85,6 @@ if METHOD == 0:
 
 
 
-
-
-
-
-
-
-
-
-
-
 # implementation fro 10 | CDB
 
 
