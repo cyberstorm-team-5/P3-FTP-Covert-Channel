@@ -68,13 +68,6 @@ def retrieveData():
 		data[i] = data[i][0:10]
 		i=i+1
 
-<<<<<<< HEAD
-	string = ''
-	for line in data:
-		if line [:3] == ('---'):
-			for letter in line[3:]:
-				if letter ==  ('-'):
-=======
 
 #generate a binary string based on the permissions in the data array
 def genString():
@@ -105,23 +98,10 @@ def genString():
 			#append 0 to string for any '-', else 1
 			for letter in line:
 				if (letter ==  ('-')):
->>>>>>> cleanup
 					string += "0"
 				else:
 					string += "1"
 
-<<<<<<< HEAD
-	convertASCII(string, len(string))          
-else:
-	server.dir('10', data.append)
-	i = 0
-	while i < len(data):
-		data[i] = data[i][0:12]
-		i=i+1
-
-#for line in data:
-	#print(line)
-=======
 	#output the 7-bit ASCII version of the binary string
 	convertASCII(string, len(string))
 
@@ -141,4 +121,3 @@ genString()
 
 
 
->>>>>>> cleanup
