@@ -1,4 +1,4 @@
-################################################################
+################################################################################
 # Authors: Team Chinese (Lane Arnold, Christopher Boquet,
 # 	   Christopher Bouton, Darrell Durousseaux, Clay Fonseca,
 #	   Rebecca Grantham, Andrew Maurice)
@@ -9,22 +9,29 @@
 #              The Python code will extract a covert message from the
 #              file permissions of a FTP server. It first fetches the file
 #              listing and (based on the METHOD variable at the top of the
-#              code), will either use the last 7 or all 10 bits of the file
-#              permissions to generate and output the covert message.
-################################################################
-import ftplib
-###############################################################
+#              code), will either use the last 7 or all 10 bits (METHOD = 0
+#              or 1, respectively) of the file permissions to generate
+#              and output the covert message.
+################################################################################
 
+import ftplib
+################################################################################
+
+#global var to select mode (0 (7-bit) or 1 (10-bit))
 METHOD = 0
-#all of our data is stored in this list
+#global var for the string of the FTP server to connect to
+SERVER = 'www.jeangourd.com'
+#global var for directory within server to retrieve file permissions info from
+DIR = '7'
+
+#data retrieved from server is stored here
 data = []
 
-###############################################################
-server = ftplib.FTP()
-server.connect('www.jeangourd.com')
-server.login('anonymous')
+################################################################################
+
 
 #process input as a sequence of 7- or 8-bit ascii code to convert to a readable string
+#(NOTE: function retrieved from our P1: Binary Decoder Program)
 def convertASCII(binaryInput, binaryLength):
 	
 	finalString = ""
@@ -50,24 +57,60 @@ def convertASCII(binaryInput, binaryLength):
 	return
 
 
+#append all permissions data in the DIR directory in the server to the data array
+def retrieveData():
+	server.dir(DIR, data.append)
 
-if METHOD == 0:
-	server.dir('7', data.append)
-	i = 0
-	while i < len(data):
+	#loop through each line of data retrieved (1 line/index of the data array)
+	for i in range(len(data)):
+		#remove all but the first 10 characters of each line (only want
+		#the permissions info)
 		data[i] = data[i][0:10]
 		i=i+1
 
+<<<<<<< HEAD
 	string = ''
 	for line in data:
 		if line [:3] == ('---'):
 			for letter in line[3:]:
 				if letter ==  ('-'):
-					string += "0"
+=======
 
+#generate a binary string based on the permissions in the data array
+def genString():
+	
+	string = ''
+
+	#based on METHOD specified, process data accordingly
+	if (METHOD == 0):
+		#7-bit method
+		for line in data:
+			
+			#only process lines of data that have all '-' for
+			#the first 3 characters
+			if line [:3] == ('---'):
+
+				#for the remaining 7-bits, append a 0 to the
+				#string for any '-', else 1
+				for letter in line[3:]:
+					if (letter ==  ('-')):
+						string += "0"
+					else:
+						string += "1"
+
+	else:
+		#10-bit method
+		for line in data:
+
+			#append 0 to string for any '-', else 1
+			for letter in line:
+				if (letter ==  ('-')):
+>>>>>>> cleanup
+					string += "0"
 				else:
 					string += "1"
 
+<<<<<<< HEAD
 	convertASCII(string, len(string))          
 else:
 	server.dir('10', data.append)
@@ -78,3 +121,24 @@ else:
 
 #for line in data:
 	#print(line)
+=======
+	#output the 7-bit ASCII version of the binary string
+	convertASCII(string, len(string))
+
+
+
+#####################################MAIN#######################################
+
+#setup connection to server
+server = ftplib.FTP()
+server.connect(SERVER)
+server.login('anonymous')
+
+#retrieve the permissions data from server
+retrieveData()
+#generate the binary string and print the 7-bit ASCII version
+genString()
+
+
+
+>>>>>>> cleanup
